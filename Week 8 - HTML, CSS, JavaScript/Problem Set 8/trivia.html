@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <link href="styles.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>My Webpage</title>
+
+        <!-- Script from Trivia -->
+        <script>
+          //Run script when DOM is loaded
+          document.addEventListener("DOMContentLoaded", function() {
+              var score = 0;
+              var num_of_questions = 5;
+              var questions_answered = 0;
+
+              // Function used to check if multiple-choice questions were answered correctly
+              function check_mult_choice(e) {
+                  if (!(e.target.nodeName == "BUTTON")) {
+                      return;
+                  }
+
+                  let feedback = document.querySelector("#" + e.currentTarget.id + "-feedback");
+
+                  if (e.target.className == "correct") {
+                    e.target.style.backgroundColor = "green";
+                    feedback.innerHTML = "Correct!";
+                    feedback.style.color = "green";
+                    score++; // Add points
+                  }
+                  else {
+                      e.target.style.backgroundColor = "red";
+                      feedback.innerHTML = "Incorrect!";
+                      feedback.style.color = "red";
+                  }
+
+                  questions_answered++;
+
+                  if (num_of_questions == questions_answered) {
+                    document.querySelector("#results").innerHTML = "Score: " + score;
+                  }
+
+                  // Remove listener to avoid changing answer
+                  document.getElementById(e.currentTarget.id).removeEventListener("click", check_mult_choice);
+                  }
+
+              // Add listeners to each question
+              for (let i = 1; i <= num_of_questions; i++)
+              {
+                  document.getElementById('mult-q' + i).addEventListener("click", check_mult_choice);
+              }
+          });
+        </script>
+    </head>
+    <body>
+        <!-- Top navigation header -->
+        <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="/index.html">Home</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/blog.html">Blog</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/trivia.html">IT Trivia</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/about.html">About me</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+
+      <br>
+
+      <div class="trivia-questions">
+        <!-- Multiple choice questions -->
+        <div id="mult-q1">
+          <h3>Which PC part is the "brain" of computer?</h3>
+              <button class="incorrect">Motherboard</button>
+              <button class="incorrect">RAM</button>
+              <button class="correct">CPU</button>
+              <button class="incorrect">Disk</button>
+              <p id="mult-q1-feedback"></p>
+        </div>
+
+        <div id="mult-q2">
+          <h3>Which device is used to move cursor on screen?</h3>
+              <button class="incorrect">Printer</button>
+              <button class="incorrect">Keyboard</button>
+              <button class="incorrect">Microphone</button>
+              <button class="correct">Mouse</button>
+              <p id="mult-q2-feedback"></p>
+        </div>
+
+        <div id="mult-q3">
+          <h3>What is IP address used for?</h3>
+              <button class="correct">Identyfing computers on the internet</button>
+              <button class="incorrect">To calculate PI number</button>
+              <button class="incorrect">For complex calculations in programming Python</button>
+              <p id="mult-q3-feedback"></p>
+        </div>
+
+        <div id="mult-q4">
+          <h3>How many bytes are in 1 kilobyte?</h3>
+              <button class="incorrect">100 bytes</button>
+              <button class="correct">1000 bytes</button>
+              <button class="incorrect">1000 bits</button>
+              <button class="incorrect">100 bits</button>
+              <p id="mult-q4-feedback"></p>
+        </div>
+
+        <div id="mult-q5">
+          <h3>What is the two digit numeric system, that computers use?</h3>
+              <button class="incorrect">Hexadecimal</button>
+              <button class="incorrect">Octal</button>
+              <button class="incorrect">Decimal</button>
+              <button class="correct">Binary</button>
+              <p id="mult-q5-feedback"></p>
+        </div>
+      </div>
+
+      <h1 id="results"></h1>
+
+    </body>
+</html>

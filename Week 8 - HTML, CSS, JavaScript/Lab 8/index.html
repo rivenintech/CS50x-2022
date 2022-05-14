@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="styles.css" rel="stylesheet">
+        <title>Trivia!</title>
+        <script>
+            //Run script when DOM is loaded
+            document.addEventListener("DOMContentLoaded", function() {
+
+                // Function used to check if multiple-choice questions were answered correctly
+                function check_mult_choice(e) {
+                    if (!e.target.nodeName == "BUTTON") {
+                        return;
+                    }
+
+                    let feedback = document.querySelector("#" + e.currentTarget.id + "-feedback");
+
+                    if (e.target.className == "correct") {
+                        e.target.style.backgroundColor = "green";
+                        feedback.innerHTML = "Correct!";
+                        feedback.style.color = "green";
+                    }
+                    else {
+                        e.target.style.backgroundColor = "red";
+                        feedback.innerHTML = "Incorrect!";
+                        feedback.style.color = "red";
+                    }
+
+                    // Remove listener to avoid changing answer
+                    document.getElementById(e.currentTarget.id).removeEventListener("click", check_mult_choice);
+                    }
+
+                // Add listeners to each question
+                document.getElementById('mult-q1').addEventListener("click", check_mult_choice);
+                document.getElementById('mult-q2').addEventListener("click", check_mult_choice);
+
+                // Free response check function
+                document.querySelector("#q1-check").addEventListener("click", function() {
+                    let input = document.querySelector("input");
+                    let feedback = document.querySelector("#q1-feedback");
+
+                    // Disable input to avoid changing answer
+                    input.disabled = true;
+
+                    if (input.value.toLowerCase() === "linux") {
+                        input.style.backgroundColor = "green";
+                        feedback.innerHTML = "Correct!";
+                        feedback.style.color = "green";
+                    }
+                    else {
+                        input.style.backgroundColor = "red";
+                        feedback.innerHTML = "Incorrect!";
+                        feedback.style.color = "red";
+                    }
+                })
+            });
+        </script>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Trivia!</h1>
+        </div>
+
+        <div class="container">
+            <div class="section">
+                <h2>Part 1: Multiple Choice </h2>
+                <hr>
+
+                <!-- Multiple choice questions -->
+                <div id="mult-q1">
+                <h3>Which PC part is the "brain" of computer?</h3>
+                    <button class="incorrect">Motherboard</button>
+                    <button class="incorrect">RAM</button>
+                    <button class="correct">CPU</button>
+                    <button class="incorrect">Disk</button>
+
+                    <p id="mult-q1-feedback"></p>
+                </div>
+
+                <div id="mult-q2">
+                    <h3>What is the number system that computers understand?</h3>
+                        <button class="incorrect">Decimal</button>
+                        <button class="correct">Binary</button>
+                        <button class="incorrect">Hexadecimal</button>
+                        <button class="incorrect">Octal</button>
+
+                        <p id="mult-q2-feedback"></p>
+                    </div>
+            </div>
+
+            <div class="section">
+                <h2>Part 2: Free Response</h2>
+                <hr>
+
+                <!-- Free response question -->
+                <h3>What is the name of the operating system which logo is a penguin?</h3>
+                <input type="text"></input>
+                <button id="q1-check">Check Answer</button>
+
+                <p id="q1-feedback"></p>
+            </div>
+        </div>
+    </body>
+</html>
